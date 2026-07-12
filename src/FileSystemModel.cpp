@@ -36,7 +36,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
 
         else if(index.column() == SizeColumn){
 
-            auto formatDataSize = [](int size) -> QString
+            auto formatDataSize = [](qint64 size) -> QString
             {
                 return QLocale().formattedDataSize(size, 2, QLocale::DataSizeTraditionalFormat);
             };
@@ -44,7 +44,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
             if(info.isDir()){
                 if (CacheSizes.contains(path))
                 {
-                    int bytes = CacheSizes[path];
+                    qint64 bytes = CacheSizes[path];
                     return formatDataSize(bytes);
                 }
 
@@ -59,7 +59,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
                 return "каталог";
             }
             QMimeDatabase db;
-            QMimeType mime = db.mimeTypeForFile(path, QMimeDatabase::MatchContent);
+            QMimeType mime = db.mimeTypeForFile(path, QMimeDatabase::MatchExtension);
             
             if(!mime.isValid()) return QVariant();
 
@@ -72,4 +72,25 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
 
 void FileSystemModel::updateSizeFolder(const QModelIndex &index)
 {
+    QString path = filePath(index);
+    
+    qint64 size = calculateSize(path);
+
+    CacheSizes[path] = size;
+
+    emit dataChanged(index, index);   
+}
+
+qint64 FileSystemModel::calculateSize(const QString &path)
+{
+    QDirIterator it(path, QDir::Files, QDirIterator::Subdirectories);
+    qint64 totalSize = 0;
+
+    while (it.hasNext())
+    {
+        QFileInfo info(it.next());
+        totalSize += info.size();
+    }
+    
+    return totalSize;
 }

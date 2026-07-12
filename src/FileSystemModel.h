@@ -7,7 +7,7 @@ class FileSystemModel : public QFileSystemModel
 {
     Q_OBJECT;
 
-    QHash<QString, int> CacheSizes;
+    QHash<QString, qint64> CacheSizes;
 
 public:
     enum Columns
@@ -24,4 +24,5 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     void updateSizeFolder(const QModelIndex &index);
+    qint64 calculateSize(const QString &path);
 };
