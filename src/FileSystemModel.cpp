@@ -2,6 +2,7 @@
 #include <QMimeDatabase>
 #include <QLocale>
 #include <QDirIterator>
+#include <QFileIconProvider>
 
 FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent)
 {
@@ -29,13 +30,10 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
     
     QString path = filePath(index);
     QFileInfo info(path);
-    
-    if (role == Qt::DisplayRole) {
-        if(index.column() == NameColumn){
-            return info.fileName();
-        }
 
-        else if(index.column() == SizeColumn){
+    if (role == Qt::DisplayRole) {
+        
+        if(index.column() == SizeColumn){
 
             auto formatDataSize = [](qint64 size) -> QString
             {
