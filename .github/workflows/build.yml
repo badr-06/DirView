@@ -22,8 +22,3 @@ jobs:
 
     - name: Build with CMake
       run: mkdir -p build && make
-
-  debian:
-    steps:
-    - name: Debian the project
-      run: dpkg-buildpackage -us -uc
