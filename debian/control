@@ -1,0 +1,14 @@
+Source: dirview
+Section: utils
+Priority: optional
+Maintainer: Abdurahman Guliev <gulievrahman060606@mail.ru>
+Build-Depends: debhelper-compat (= 13), qt6-base-dev
+Standards-Version: 4.6.0
+
+Package: dirview
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: File system viewer with filtering
+ DirView is a graphical application for viewing file system
+ with support for hidden files, filtering by name,
+ and folder size calculation.
