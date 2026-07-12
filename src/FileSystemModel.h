@@ -3,26 +3,21 @@
 #include <QFileSystemModel>
 #include <QHash>
 
-class FileSystemModel : public QFileSystemModel
-{
-    Q_OBJECT;
+class FileSystemModel : public QFileSystemModel {
+  Q_OBJECT;
 
-    QHash<QString, qint64> CacheSizes;
+  QHash<QString, qint64> CacheSizes;
 
 public:
-    enum Columns
-    {
-        NameColumn = 0,
-        SizeColumn,
-        TypeColumn,
-        DateColumn
-    };
+  enum Columns { NameColumn = 0, SizeColumn, TypeColumn, DateColumn };
 
-    explicit FileSystemModel(QObject *parent = nullptr);
+  explicit FileSystemModel(QObject *parent = nullptr);
 
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+  QVariant headerData(int section, Qt::Orientation orientation,
+                      int role = Qt::DisplayRole) const override;
+  QVariant data(const QModelIndex &index,
+                int role = Qt::DisplayRole) const override;
 
-    void updateSizeFolder(const QModelIndex &index);
-    qint64 calculateSize(const QString &path);
+  void updateSizeFolder(const QModelIndex &index);
+  qint64 calculateSize(const QString &path);
 };
