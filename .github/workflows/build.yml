@@ -21,6 +21,5 @@ jobs:
           build-essential
 
     - name: Build with CMake
-      run: mkdir -p build
-          make
+      run: mkdir -p build && make
 
