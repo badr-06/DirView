@@ -1,6 +1,7 @@
 #include "FileSystemModel.h"
 #include <QMimeDatabase>
 #include <QLocale>
+#include <QDirIterator>
 
 FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent)
 {
