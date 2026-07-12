@@ -5,7 +5,7 @@ on:
     branches: [ "main"]
 
 jobs:
-  build:
+  debian:
     runs-on: ubuntu-22.04
 
     steps:
@@ -19,11 +19,11 @@ jobs:
           qtbase5-dev
           qtbase5-examples
           build-essential
-
-    - name: Build with CMake
-      run: mkdir -p build && make
-
-  debian:
-    steps:
-    - name: Debian the project
+          debhelper
+          devscripts
+    
+    - name: Build Debian package
       run: dpkg-buildpackage -us -uc
+
+    - name: Check Build Debian package
+      run: ls ../*.deb && ls build
