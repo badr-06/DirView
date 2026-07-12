@@ -10,7 +10,7 @@ SortFilterProxyModel::SortFilterProxyModel(QObject *parent) : QSortFilterProxyMo
 bool SortFilterProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
 
-    QFileSystemModel *fmodel = qobject_cast<QFileSystemModel*>(sourceModel());
+    FileSystemModel *fmodel = qobject_cast<FileSystemModel*>(sourceModel());
     if(!fmodel){
         return QSortFilterProxyModel::lessThan(source_left, source_right);
     }

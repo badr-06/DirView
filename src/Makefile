@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = dirview1.0.0
-DISTDIR = /home/abdurahman/program/bardgit/Cpp/Dirview/.tmp/dirview1.0.0
+DISTDIR = /home/abdurahman/program/DirView/src/.tmp/dirview1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
@@ -54,11 +54,15 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		MainWindow.cpp \
-		SortFilterProxyModel.cpp moc_MainWindow.cpp
+		SortFilterProxyModel.cpp \
+		FileSystemModel.cpp moc_MainWindow.cpp \
+		moc_FileSystemModel.cpp
 OBJECTS       = main.o \
 		MainWindow.o \
 		SortFilterProxyModel.o \
-		moc_MainWindow.o
+		FileSystemModel.o \
+		moc_MainWindow.o \
+		moc_FileSystemModel.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -161,9 +165,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		dirview.pro MainWindow.h \
-		SortFilterProxyModel.h main.cpp \
+		SortFilterProxyModel.h \
+		FileSystemModel.h main.cpp \
 		MainWindow.cpp \
-		SortFilterProxyModel.cpp
+		SortFilterProxyModel.cpp \
+		FileSystemModel.cpp
 QMAKE_TARGET  = dirview
 DESTDIR       = 
 TARGET        = dirview
@@ -395,8 +401,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.h SortFilterProxyModel.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp MainWindow.cpp SortFilterProxyModel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.h SortFilterProxyModel.h FileSystemModel.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp MainWindow.cpp SortFilterProxyModel.cpp FileSystemModel.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -428,13 +434,18 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_MainWindow.cpp
+compiler_moc_header_make_all: moc_MainWindow.cpp moc_FileSystemModel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_MainWindow.cpp
+	-$(DEL_FILE) moc_MainWindow.cpp moc_FileSystemModel.cpp
 moc_MainWindow.cpp: MainWindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/abdurahman/program/bardgit/Cpp/Dirview/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/abdurahman/program/bardgit/Cpp/Dirview -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.h -o moc_MainWindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/abdurahman/program/DirView/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/abdurahman/program/DirView/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.h -o moc_MainWindow.cpp
+
+moc_FileSystemModel.cpp: FileSystemModel.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/abdurahman/program/DirView/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/abdurahman/program/DirView/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include FileSystemModel.h -o moc_FileSystemModel.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -456,14 +467,22 @@ main.o: main.cpp MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 MainWindow.o: MainWindow.cpp MainWindow.h \
-		SortFilterProxyModel.h
+		SortFilterProxyModel.h \
+		FileSystemModel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MainWindow.o MainWindow.cpp
 
-SortFilterProxyModel.o: SortFilterProxyModel.cpp SortFilterProxyModel.h
+SortFilterProxyModel.o: SortFilterProxyModel.cpp SortFilterProxyModel.h \
+		FileSystemModel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SortFilterProxyModel.o SortFilterProxyModel.cpp
+
+FileSystemModel.o: FileSystemModel.cpp FileSystemModel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FileSystemModel.o FileSystemModel.cpp
 
 moc_MainWindow.o: moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MainWindow.o moc_MainWindow.cpp
+
+moc_FileSystemModel.o: moc_FileSystemModel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_FileSystemModel.o moc_FileSystemModel.cpp
 
 ####### Install
 

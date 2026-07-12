@@ -5,7 +5,7 @@
 class QTreeView;
 class QLineEdit;
 class SortFilterProxyModel;
-class QFileSystemModel;
+class FileSystemModel;
 
 class MainWindow : public QMainWindow
 {
@@ -15,19 +15,20 @@ private:
     QTreeView *treeView_;
     QLineEdit *edit_;
     SortFilterProxyModel *proxy_;
-    QFileSystemModel *model_;
+    FileSystemModel *model_;
     QString homePath;
 
     void setupModel();
-    void setupTree();
+    void setupTree(size_t width);
     void setupEdit();
     void setupProxy();
 
 private slots:
     void onFilterChanged(const QString &str);
+    void onTreeViewSizeChanged(const QModelIndex &index);
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(size_t width, size_t height, QWidget *parent = nullptr);
 
 
     

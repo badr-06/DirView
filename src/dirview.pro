@@ -3,11 +3,13 @@ QT += widgets
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    SortFilterProxyModel.cpp
+    SortFilterProxyModel.cpp \
+    FileSystemModel.cpp
 
 HEADERS += \
     MainWindow.h \
-    SortFilterProxyModel.h
+    SortFilterProxyModel.h \
+    FileSystemModel.h
 
 
 TARGET = dirview

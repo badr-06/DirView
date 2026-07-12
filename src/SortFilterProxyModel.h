@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QSortFilterProxyModel>
-#include <QFileSystemModel>
+#include "FileSystemModel.h"
 
 class SortFilterProxyModel : public QSortFilterProxyModel
 {
