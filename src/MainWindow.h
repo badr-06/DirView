@@ -18,7 +18,7 @@ private:
   QString homePath;
 
   void setupModel();
-  void setupTree(size_t width);
+  void setupTree(int width);
   void setupEdit();
   void setupProxy();
 
@@ -27,5 +27,5 @@ private slots:
   void onTreeViewSizeChanged(const QModelIndex &index);
 
 public:
-  explicit MainWindow(size_t width, size_t height, QWidget *parent = nullptr);
+  explicit MainWindow(int width, int height, QWidget *parent = nullptr);
 };

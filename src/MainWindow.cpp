@@ -7,7 +7,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
-MainWindow::MainWindow(size_t width, size_t height, QWidget *parent)
+MainWindow::MainWindow(int width, int height, QWidget *parent)
     : QMainWindow(parent) {
   homePath = QDir::homePath();
 
@@ -43,7 +43,7 @@ void MainWindow::setupEdit() {
   edit_->setFixedSize(400, 25);
 }
 
-void MainWindow::setupTree(size_t width) {
+void MainWindow::setupTree(int width) {
   treeView_ = new QTreeView(this);
   treeView_->setModel(model_);
   treeView_->setRootIndex(model_->index(homePath));
@@ -54,12 +54,15 @@ void MainWindow::setupTree(size_t width) {
   treeView_->setModel(proxy_);
   treeView_->setRootIndex(proxy_->mapFromSource(model_->index(homePath)));
 
-  treeView_->setColumnWidth(0, width / model_->columnCount() +
-                                   (width / model_->columnCount() / 2));
-  treeView_->setColumnWidth(1, (width / model_->columnCount() / 2));
+  int sizeColumn = width / model_->columnCount();
 
-  for (int i = 2; i < model_->columnCount(); ++i)
-    treeView_->setColumnWidth(i, width / model_->columnCount());
+  treeView_->setColumnWidth(0, sizeColumn +
+                                   (sizeColumn / 2));
+  treeView_->setColumnWidth(1, (sizeColumn / 2) + 
+                                   (sizeColumn / 4));
+  treeView_->setColumnWidth(2, (sizeColumn / 2) + 
+                                   (sizeColumn / 4));
+  treeView_->setColumnWidth(2, sizeColumn);
 }
 
 void MainWindow::setupProxy() {
