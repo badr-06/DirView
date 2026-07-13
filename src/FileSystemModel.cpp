@@ -49,7 +49,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
           return formatDataSize(bytes);
         }
 
-        return "[Обновить]";
+        return "[Обновить размер]";
       }
 
       return formatDataSize(info.size());
